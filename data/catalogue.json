@@ -1,0 +1,48 @@
+[
+  {
+    "id": "blackbox-traffic-recorder",
+    "name": "Blackbox Traffic Recorder",
+    "type": "product",
+    "unit": "each",
+    "image": "images/bbtr.jpg",
+    "unitPrice": 1100
+  },
+  {
+    "id": "ids-alarm-kit",
+    "name": "IDS Alarm Kit (installation included)",
+    "type": "product",
+    "unit": "each",
+    "image": "images/ids.jpg",
+    "unitPrice": 9500
+  },
+  {
+    "id": "solar-security-camera",
+    "name": "Solar Security Camera",
+    "type": "product",
+    "unit": "each",
+    "image": "images/sscam.jpg",
+    "unitPrice": 1400
+  },
+  {
+    "id": "gps-car-tracker",
+    "name": "GPS Car Tracker",
+    "type": "product",
+    "unit": "each",
+    "image": "images/gpstracker.jpg",
+    "unitPrice": 1600
+  },
+  {
+    "id": "site-consultation",
+    "name": "Site Consultation & Security Assessment",
+    "type": "service",
+    "unit": "per visit",
+    "unitPrice": null
+  },
+  {
+    "id": "camera-installation",
+    "name": "Camera / Alarm Installation (standalone, not bundled)",
+    "type": "service",
+    "unit": "per unit installed",
+    "unitPrice": null
+  }
+]

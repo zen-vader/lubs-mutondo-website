@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalogue — Lubs Mutondo Limited</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16232E; --ink-2:#1F2F3D; --rust:#B24B32; --rust-2:#D66748;
+    --steel:#3D6E8C; --grey:#5B6B77; --line:#2C3E4D;
+    --paper:#FFFFFF; --paper-2:#F2F4F1; --border:#D8DCD3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper-2);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.1;letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  @media(max-width:640px){.wrap{padding:0 20px;}}
+  a:focus-visible, button:focus-visible, input:focus-visible{outline:2px solid var(--rust);outline-offset:2px;}
+
+  header{background:var(--ink);border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;color:#fff;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{width:36px;height:36px;border:1.5px solid var(--rust);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--rust);flex-shrink:0;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.15;}
+  .brand-text strong{font-family:'Space Grotesk',sans-serif;font-size:15px;letter-spacing:0.02em;}
+  .brand-text span{font-size:10.5px;color:#9FB0BC;font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em;text-transform:uppercase;}
+  .navlinks{display:flex;gap:34px;font-size:14px;color:#C7D2D9;}
+  .navlinks a:hover{color:#fff;}
+  .navlinks a.active{color:var(--rust-2);}
+  @media(max-width:760px){.navlinks{display:none;}}
+
+  .pagehead{padding:56px 0 40px;background:var(--ink);color:#fff;border-bottom:1px solid var(--line);}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--rust-2);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--rust-2);}
+  .pagehead h1{font-size:clamp(26px,3.6vw,38px);max-width:640px;}
+  .pagehead p{color:#B9C4CC;margin-top:14px;max-width:560px;font-size:15px;}
+
+  .layout{padding:48px 0 100px;display:grid;grid-template-columns:1.5fr 1fr;gap:36px;align-items:start;}
+  @media(max-width:900px){.layout{grid-template-columns:1fr;}}
+
+  /* ---------- product list ---------- */
+  .panel{background:var(--paper);border:1px solid var(--border);}
+  .panel-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+  .panel-head h2{font-size:15px;}
+  .panel-head .count{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--steel);}
+
+  .sublist-head{padding:11px 20px;background:var(--paper-2);border-bottom:1px solid var(--border);border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);display:flex;justify-content:space-between;}
+  #product-list > .sublist-head:first-child{border-top:none;}
+
+  .product-row{display:grid;grid-template-columns:88px 1fr auto auto;gap:16px;align-items:center;padding:18px 20px;border-bottom:1px solid var(--border);}
+  .product-row:last-child{border-bottom:none;}
+  .product-price.tbc{color:var(--grey);font-style:italic;font-size:12.5px;}
+  .product-thumb{
+    width:88px;height:88px;background:var(--paper-2);border:1px solid var(--border);
+    overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  }
+  .product-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .product-thumb.empty::after{
+    content:"—";font-family:'IBM Plex Mono',monospace;color:var(--border);font-size:16px;
+  }
+  .product-name{font-weight:600;font-size:14.5px;}
+  .product-unit{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--grey);margin-top:3px;text-transform:uppercase;letter-spacing:.03em;}
+  .product-price{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ink);white-space:nowrap;text-align:right;min-width:90px;}
+  .qty-stepper{display:flex;align-items:center;border:1px solid var(--border);}
+  .qty-stepper button{width:30px;height:30px;background:var(--paper-2);border:none;font-size:15px;cursor:pointer;color:var(--ink);}
+  .qty-stepper button:hover{background:var(--border);}
+  .qty-stepper input{width:42px;height:30px;border:none;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:13px;-moz-appearance:textfield;}
+  .qty-stepper input::-webkit-outer-spin-button,.qty-stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+
+  .empty-state{padding:40px 20px;text-align:center;color:var(--grey);font-size:14px;}
+
+  /* ---------- cart / form panel ---------- */
+  .cart{position:sticky;top:20px;}
+  .cart .panel-head{background:var(--ink);color:#fff;border-color:var(--line);}
+  .cart .panel-head .count{color:var(--rust-2);}
+  .cart-items{padding:6px 20px;}
+  .cart-item{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-bottom:1px solid var(--border);color:var(--grey);}
+  .cart-item:last-child{border-bottom:none;}
+  .cart-item b{color:var(--ink);font-weight:500;}
+  .cart-empty{padding:24px 20px;color:var(--grey);font-size:13.5px;}
+  .cart-total{display:flex;justify-content:space-between;padding:16px 20px;border-top:1.5px solid var(--ink);font-weight:600;font-size:15px;}
+  .cart-total .mono{color:var(--rust);font-family:'IBM Plex Mono',monospace;}
+
+  .form-section{padding:20px;border-top:1px solid var(--border);}
+  .type-toggle{display:flex;border:1px solid var(--border);margin-bottom:18px;}
+  .type-toggle button{flex:1;padding:11px;background:var(--paper);border:none;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--grey);cursor:pointer;transition:.15s;}
+  .type-toggle button.active{background:var(--ink);color:#fff;}
+  .type-toggle button:first-child{border-right:1px solid var(--border);}
+
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);margin-bottom:6px;}
+  .field input, .field textarea{width:100%;padding:11px 12px;border:1px solid var(--border);font-family:'Inter',sans-serif;font-size:14px;background:var(--paper);color:var(--ink);}
+  .field textarea{resize:vertical;min-height:70px;}
+  .field input:focus, .field textarea:focus{border-color:var(--steel);}
+
+  /* honeypot - invisible to humans, present for bots */
+  .hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+
+  .submit-btn{width:100%;padding:14px;background:var(--rust);color:#fff;border:none;font-size:14.5px;font-weight:500;cursor:pointer;transition:background .15s;margin-top:6px;}
+  .submit-btn:hover:not(:disabled){background:var(--rust-2);}
+  .submit-btn:disabled{background:#B9A99E;cursor:not-allowed;}
+
+  .status-msg{margin-top:14px;padding:12px 14px;font-size:13.5px;border:1px solid transparent;}
+  .status-msg.success{background:#EAF4EC;border-color:#B7DABF;color:#2E7D32;}
+  .status-msg.error{background:#FBEAE6;border-color:#EBC3B7;color:#B24B32;}
+
+  footer{padding:26px 0;background:var(--ink);border-top:1px solid var(--line);color:#7E8F9A;font-size:12.5px;font-family:'IBM Plex Mono',monospace;}
+  .footer-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav wrap" style="padding-left:0;padding-right:0;">
+    <div class="brand">
+      <div class="brand-mark">LM</div>
+      <div class="brand-text">
+        <strong>LUBS MUTONDO LTD</strong>
+        <span>Security · Construction · Supply</span>
+      </div>
+    </div>
+    <div class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="catalogue.html" class="active">Catalogue</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section class="pagehead">
+  <div class="wrap">
+    <div class="eyebrow">Catalogue · FIG. 00</div>
+    <h1>Pick what you need. We'll email the paperwork.</h1>
+    <p>Select products and services below, set quantities, and tell us where to send it — a formal PDF quotation or invoice lands in your inbox in moments.</p>
+  </div>
+</section>
+
+<div class="wrap layout">
+  <div class="panel" id="catalogue-panel">
+    <div class="panel-head">
+      <h2>Products &amp; Services</h2>
+      <span class="count mono" id="product-count">Loading…</span>
+    </div>
+    <div id="product-list">
+      <div class="empty-state">Loading catalogue…</div>
+    </div>
+  </div>
+
+  <div class="panel cart">
+    <div class="panel-head">
+      <h2>Your Request</h2>
+      <span class="count mono" id="cart-count">0 items</span>
+    </div>
+
+    <div class="cart-items" id="cart-items">
+      <div class="cart-empty">Nothing selected yet — set a quantity on any item to add it here.</div>
+    </div>
+    <div class="cart-total" id="cart-total" style="display:none;">
+      <span>Subtotal</span>
+      <span class="mono" id="cart-total-value">K0.00</span>
+    </div>
+
+    <form id="request-form" class="form-section">
+      <div class="type-toggle">
+        <button type="button" class="active" data-type="quote">Quotation</button>
+        <button type="button" data-type="invoice">Invoice</button>
+      </div>
+
+      <div class="field">
+        <label for="cust-name">Your name</label>
+        <input type="text" id="cust-name" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="cust-email">Your email</label>
+        <input type="email" id="cust-email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="cust-notes">Notes (optional)</label>
+        <textarea id="cust-notes" placeholder="Site address, timing, anything else we should know"></textarea>
+      </div>
+
+      <!-- Honeypot: real visitors never see or fill this. Bots that fill every field will, and we quietly drop those submissions. -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="company_website">Company website</label>
+        <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn" disabled>Select at least one item</button>
+      <div id="status-msg"></div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© <span id="year"></span> LUBS MUTONDO LIMITED</span>
+    <span>REG. 20 FEB 2024 · LUSAKA, ZAMBIA</span>
+  </div>
+</footer>
+
+<script>
+  // ---- CONFIG: point this at your deployed backend ----
+  const API_BASE = ""; // e.g. "https://lubs-mutondo-quotes-api.up.railway.app"
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  let products = [];
+  const cart = {}; // productId -> qty
+
+  const productList = document.getElementById('product-list');
+  const productCount = document.getElementById('product-count');
+  const cartItemsEl = document.getElementById('cart-items');
+  const cartCountEl = document.getElementById('cart-count');
+  const cartTotalEl = document.getElementById('cart-total');
+  const cartTotalValueEl = document.getElementById('cart-total-value');
+  const submitBtn = document.getElementById('submit-btn');
+  const statusMsg = document.getElementById('status-msg');
+
+  function formatPrice(n) {
+    if (n === null || n === undefined) return "Quote on request";
+    return "K" + Number(n).toLocaleString("en-ZM", { minimumFractionDigits: 2 });
+  }
+
+  function productRowHtml(p) {
+    const priced = p.unitPrice !== null && p.unitPrice !== undefined;
+    const thumb = p.image
+      ? `<div class="product-thumb"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>`
+      : `<div class="product-thumb empty"></div>`;
+    return `
+      <div class="product-row">
+        ${thumb}
+        <div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-unit">${p.unit || ""}</div>
+        </div>
+        <div class="product-price${priced ? "" : " tbc"}">${formatPrice(p.unitPrice)}</div>
+        <div class="qty-stepper">
+          <button type="button" data-action="dec" data-id="${p.id}" aria-label="Decrease quantity">−</button>
+          <input type="number" min="0" value="${cart[p.id] || 0}" data-id="${p.id}" aria-label="Quantity for ${p.name}">
+          <button type="button" data-action="inc" data-id="${p.id}" aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderProducts() {
+    if (!products.length) {
+      productList.innerHTML = '<div class="empty-state">No products available right now. Please contact us directly.</div>';
+      productCount.textContent = "0 items";
+      return;
+    }
+    productCount.textContent = `${products.length} item${products.length === 1 ? "" : "s"}`;
+
+    const goods = products.filter(p => p.type !== "service");
+    const services = products.filter(p => p.type === "service");
+
+    let html = "";
+    if (goods.length) {
+      html += `<div class="sublist-head"><span>Products</span><span>${goods.length}</span></div>`;
+      html += goods.map(productRowHtml).join("");
+    }
+    if (services.length) {
+      html += `<div class="sublist-head"><span>Services</span><span>${services.length}</span></div>`;
+      html += services.map(productRowHtml).join("");
+    }
+    productList.innerHTML = html;
+  }
+
+  function renderCart() {
+    const entries = Object.entries(cart).filter(([, qty]) => qty > 0);
+    if (!entries.length) {
+      cartItemsEl.innerHTML = '<div class="cart-empty">Nothing selected yet — set a quantity on any item to add it here.</div>';
+      cartTotalEl.style.display = "none";
+      cartCountEl.textContent = "0 items";
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Select at least one item";
+      return;
+    }
+    let total = 0;
+    let hasQuoteOnRequest = false;
+    cartItemsEl.innerHTML = entries.map(([id, qty]) => {
+      const p = products.find(pr => pr.id === id);
+      if (!p) return "";
+      const priced = p.unitPrice !== null && p.unitPrice !== undefined;
+      if (!priced) {
+        hasQuoteOnRequest = true;
+        return `<div class="cart-item"><span>${qty} × ${p.name}</span><b>Quote on request</b></div>`;
+      }
+      const lineTotal = p.unitPrice * qty;
+      total += lineTotal;
+      return `<div class="cart-item"><span>${qty} × ${p.name}</span><b>${formatPrice(lineTotal)}</b></div>`;
+    }).join("");
+    cartTotalEl.style.display = "flex";
+    cartTotalValueEl.textContent = formatPrice(total) + (hasQuoteOnRequest ? " + TBC" : "");
+    cartCountEl.textContent = `${entries.length} item${entries.length === 1 ? "" : "s"}`;
+    submitBtn.disabled = false;
+    submitBtn.textContent = `Send my ${currentType === "invoice" ? "invoice" : "quotation"} request`;
+  }
+
+  productList.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    const current = cart[id] || 0;
+    const next = btn.dataset.action === 'inc' ? current + 1 : Math.max(0, current - 1);
+    cart[id] = next;
+    const input = productList.querySelector(`input[data-id="${id}"]`);
+    if (input) input.value = next;
+    renderCart();
+  });
+
+  productList.addEventListener('change', (e) => {
+    if (e.target.tagName !== 'INPUT') return;
+    const id = e.target.dataset.id;
+    const val = Math.max(0, parseInt(e.target.value, 10) || 0);
+    cart[id] = val;
+    e.target.value = val;
+    renderCart();
+  });
+
+  let currentType = "quote";
+  document.querySelectorAll('.type-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.type-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentType = btn.dataset.type;
+      renderCart();
+    });
+  });
+
+  async function loadCatalogue() {
+    try {
+      const res = await fetch(`${API_BASE}/api/catalogue`);
+      if (!res.ok) throw new Error("Failed to load catalogue");
+      const data = await res.json();
+      products = data.products || [];
+      renderProducts();
+    } catch (err) {
+      productList.innerHTML = '<div class="empty-state">Couldn\'t load the catalogue. Please refresh, or contact us directly if this keeps happening.</div>';
+      productCount.textContent = "—";
+    }
+  }
+
+  document.getElementById('request-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    statusMsg.innerHTML = "";
+
+    const items = Object.entries(cart)
+      .filter(([, qty]) => qty > 0)
+      .map(([productId, qty]) => ({ productId, qty }));
+
+    if (!items.length) return;
+
+    const body = {
+      type: currentType,
+      customer: {
+        name: document.getElementById('cust-name').value.trim(),
+        email: document.getElementById('cust-email').value.trim(),
+      },
+      items,
+      notes: document.getElementById('cust-notes').value.trim(),
+      company_website: document.getElementById('company_website').value, // honeypot
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+
+    try {
+      const res = await fetch(`${API_BASE}/api/public/quotes/request`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        statusMsg.innerHTML = `<div class="status-msg error">${data.error || "Something went wrong. Please try again."}</div>`;
+        submitBtn.disabled = false;
+        renderCart();
+        return;
+      }
+
+      statusMsg.innerHTML = `<div class="status-msg success">Sent! Check ${body.customer.email} for your ${currentType} (${data.docNumber}).</div>`;
+      Object.keys(cart).forEach(id => delete cart[id]);
+      document.getElementById('request-form').reset();
+      renderProducts();
+      renderCart();
+    } catch (err) {
+      statusMsg.innerHTML = `<div class="status-msg error">Couldn't reach the server. Please check your connection and try again.</div>`;
+      submitBtn.disabled = false;
+      renderCart();
+    }
+  });
+
+  loadCatalogue();
+</script>
+
+</body>
+</html>

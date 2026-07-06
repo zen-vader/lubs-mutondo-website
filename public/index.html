@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lubs Mutondo Limited — Security, Construction &amp; Industrial Supply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16232E;
+    --ink-2:#1F2F3D;
+    --rust:#B24B32;
+    --rust-2:#D66748;
+    --steel:#3D6E8C;
+    --grey:#5B6B77;
+    --line:#2C3E4D;
+    --paper:#FFFFFF;
+    --paper-2:#F2F4F1;
+    --parchment:#E4DFCF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk',sans-serif;
+    line-height:1.1;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  @media(max-width:640px){.wrap{padding:0 20px;}}
+
+  /* ---------- focus ---------- */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--rust);
+    outline-offset:3px;
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(22,35,46,0.96);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;color:#fff;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{
+    width:36px;height:36px;border:1.5px solid var(--rust);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;
+    color:var(--rust);flex-shrink:0;
+  }
+  .brand-text{display:flex;flex-direction:column;line-height:1.15;}
+  .brand-text strong{font-family:'Space Grotesk',sans-serif;font-size:15px;letter-spacing:0.02em;}
+  .brand-text span{font-size:10.5px;color:#9FB0BC;font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em;text-transform:uppercase;}
+  .navlinks{display:flex;gap:34px;font-size:14px;color:#C7D2D9;}
+  .navlinks a{transition:color .15s;}
+  .navlinks a:hover{color:#fff;}
+  .nav-cta{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.02em;
+    border:1px solid var(--rust);color:#fff;background:var(--rust);
+    padding:10px 18px;transition:background .15s,border-color .15s;
+  }
+  .nav-cta:hover{background:var(--rust-2);border-color:var(--rust-2);}
+  .navlinks, .nav-cta{white-space:nowrap;}
+  .menu-toggle{display:none;background:none;border:1px solid var(--line);color:#fff;padding:8px 10px;font-size:16px;}
+  @media(max-width:860px){
+    .navlinks{display:none;}
+    .nav-cta{display:none;}
+    .menu-toggle{display:block;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    background:var(--ink);
+    color:#fff;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .grid-bg{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size:42px 42px;
+    -webkit-mask-image:radial-gradient(ellipse 80% 70% at 60% 20%, #000 30%, transparent 85%);
+            mask-image:radial-gradient(ellipse 80% 70% at 60% 20%, #000 30%, transparent 85%);
+  }
+  .crop{position:absolute;width:22px;height:22px;border-color:var(--steel);opacity:.7;}
+  .crop.tl{top:18px;left:18px;border-top:1.5px solid;border-left:1.5px solid;}
+  .crop.tr{top:18px;right:18px;border-top:1.5px solid;border-right:1.5px solid;}
+  .crop.bl{bottom:18px;left:18px;border-bottom:1.5px solid;border-left:1.5px solid;}
+  .crop.br{bottom:18px;right:18px;border-bottom:1.5px solid;border-right:1.5px solid;}
+
+  .hero-inner{
+    position:relative;z-index:2;
+    padding:96px 32px 64px;
+    display:grid;grid-template-columns:1.15fr 0.85fr;gap:56px;align-items:end;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;
+    color:var(--rust-2);text-transform:uppercase;margin-bottom:18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--rust-2);}
+  .hero h1{font-size:clamp(32px,4.6vw,54px);font-weight:600;max-width:640px;}
+  .hero h1 em{font-style:normal;color:var(--rust-2);}
+  .hero p.lead{margin-top:22px;color:#B9C4CC;font-size:16.5px;max-width:520px;}
+  .hero-ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .btn{
+    padding:13px 24px;font-size:14px;font-weight:500;
+    border:1px solid transparent;display:inline-block;transition:.15s;
+  }
+  .btn-primary{background:var(--rust);color:#fff;}
+  .btn-primary:hover{background:var(--rust-2);}
+  .btn-ghost{border-color:#3B4D5A;color:#EDEFEC;}
+  .btn-ghost:hover{border-color:#fff;}
+
+  /* title-block, styled after a drawing title block */
+  .titleblock{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,0.03);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+  }
+  .tb-row{
+    display:flex;justify-content:space-between;
+    padding:11px 16px;border-bottom:1px solid var(--line);
+    color:#9FB0BC;
+  }
+  .tb-row:last-child{border-bottom:none;}
+  .tb-row b{color:#fff;font-weight:500;text-align:right;}
+  .tb-head{
+    padding:12px 16px;border-bottom:1px solid var(--line);
+    color:var(--rust-2);letter-spacing:.08em;font-size:11px;text-transform:uppercase;
+  }
+  @media(max-width:860px){
+    .hero-inner{grid-template-columns:1fr;padding-top:64px;}
+  }
+
+  /* ---------- overview ---------- */
+  .overview{padding:88px 0;border-bottom:1px solid #E4E7E2;}
+  .overview-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:64px;}
+  .section-label{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;
+    color:var(--steel);text-transform:uppercase;margin-bottom:14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .section-label::before{content:"";width:26px;height:1px;background:var(--steel);}
+  .overview h2{font-size:clamp(24px,3vw,32px);margin-bottom:20px;max-width:520px;}
+  .overview p{color:var(--grey);font-size:15.5px;max-width:560px;}
+  .overview p + p{margin-top:16px;}
+
+  .reg-card{
+    border:1px solid #D8DCD3;padding:0;height:fit-content;
+  }
+  .reg-card .tb-head{color:var(--rust);border-bottom:1px solid #D8DCD3;}
+  .reg-card .tb-row{border-bottom:1px solid #D8DCD3;color:var(--grey);}
+  .reg-card .tb-row b{color:var(--ink);}
+  @media(max-width:860px){.overview-grid{grid-template-columns:1fr;gap:40px;}}
+
+  /* ---------- services ---------- */
+  .services{padding:88px 0 96px;background:var(--paper-2);}
+  .services-head{max-width:600px;margin-bottom:52px;}
+  .services-head h2{font-size:clamp(24px,3vw,32px);}
+  .services-head p{color:var(--grey);margin-top:14px;font-size:15.5px;}
+
+  .service-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:1px;background:#D8DCD3;border:1px solid #D8DCD3;
+  }
+  .card{
+    background:var(--paper);padding:30px 28px;position:relative;
+    transition:background .18s;
+  }
+  .card:hover{background:#fff;}
+  .card:hover .card-icon svg{stroke:var(--rust);}
+  .card-fig{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--steel);
+    letter-spacing:.08em;margin-bottom:18px;display:block;
+  }
+  .card-icon{margin-bottom:16px;}
+  .card-icon svg{width:30px;height:30px;stroke:var(--ink);stroke-width:1.4;fill:none;transition:stroke .18s;}
+  .card h3{font-size:17px;margin-bottom:10px;font-weight:600;}
+  .card ul{list-style:none;color:var(--grey);font-size:13.5px;}
+  .card li{padding:3px 0;padding-left:14px;position:relative;}
+  .card li::before{content:"—";position:absolute;left:0;color:var(--rust);}
+
+  /* ---------- our work / gallery ---------- */
+  .work{padding:88px 0 96px;background:var(--paper);border-bottom:1px solid #E4E7E2;}
+  .work-head{max-width:600px;margin-bottom:52px;}
+  .work-head h2{font-size:clamp(24px,3vw,32px);}
+  .work-head p{color:var(--grey);margin-top:14px;font-size:15.5px;}
+
+  .work-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:1px;background:#D8DCD3;border:1px solid #D8DCD3;
+  }
+  .work-item{
+    position:relative;background:var(--ink);aspect-ratio:4/3;overflow:hidden;
+  }
+  .work-item img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .35s ease;
+  }
+  .work-item:hover img{transform:scale(1.05);}
+  .work-caption{
+    position:absolute;left:0;right:0;bottom:0;padding:14px 16px;
+    background:linear-gradient(to top,rgba(22,35,46,0.92),rgba(22,35,46,0));
+    color:#fff;
+  }
+  .work-caption .fig{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--rust-2);
+    letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px;
+  }
+  .work-caption strong{font-size:14px;font-weight:600;display:block;}
+  .work-caption span.loc{font-size:12px;color:#C7D2D9;}
+
+  /* ---------- contact / footer ---------- */
+  .contact{padding:80px 0;background:var(--ink);color:#fff;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
+  .contact h2{font-size:clamp(22px,3vw,30px);max-width:420px;}
+  .contact p.lead{color:#AEBAC2;margin-top:16px;max-width:420px;font-size:15px;}
+  .contact-list{margin-top:28px;}
+  .contact-list div{
+    display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--line);
+    font-size:14.5px;color:#D7DFE3;
+  }
+  .contact-list span.mono{color:#8FA3AF;min-width:80px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding-top:2px;}
+
+  .cta-panel{border:1px solid var(--line);padding:32px;background:rgba(255,255,255,0.02);}
+  .cta-panel .tb-head{color:var(--rust-2);}
+  .cta-panel p{color:#B9C4CC;font-size:14.5px;margin-bottom:22px;}
+
+  footer{
+    padding:26px 0;background:var(--ink);border-top:1px solid var(--line);
+    color:#7E8F9A;font-size:12.5px;font-family:'IBM Plex Mono',monospace;
+  }
+  .footer-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav wrap" style="padding-left:0;padding-right:0;">
+    <div class="brand">
+      <div class="brand-mark">LM</div>
+      <div class="brand-text">
+        <strong>LUBS MUTONDO LTD</strong>
+        <span>Security · Construction · Supply</span>
+      </div>
+    </div>
+    <div class="navlinks">
+      <a href="#overview">Overview</a>
+      <a href="#services">Services</a>
+      <a href="#work">Our Work</a>
+      <a href="catalogue.html">Catalogue</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="catalogue.html" class="nav-cta">REQUEST A QUOTE</a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <span class="crop tl"></span><span class="crop tr"></span>
+  <span class="crop bl"></span><span class="crop br"></span>
+
+  <div class="hero-inner wrap">
+    <div>
+      <div class="eyebrow">Registered Zambian Contractor · Est. 2024</div>
+      <h1>Security systems, construction &amp; industrial supply, <em>built to spec.</em></h1>
+      <p class="lead">Lubs Mutondo Limited supplies and installs protection and infrastructure solutions for homes, businesses and institutions across Zambia — from CCTV and electric fencing to construction materials, plant hire and facilities supply.</p>
+      <div class="hero-ctas">
+        <a href="catalogue.html" class="btn btn-primary">Request a quote</a>
+        <a href="#services" class="btn btn-ghost">View services</a>
+      </div>
+    </div>
+
+    <div class="titleblock">
+      <div class="tb-head">Company Record</div>
+      <div class="tb-row"><span>Entity</span><b>Private co., limited by shares</b></div>
+      <div class="tb-row"><span>Jurisdiction</span><b>Republic of Zambia</b></div>
+      <div class="tb-row"><span>Registered</span><b>20 Feb 2024</b></div>
+      <div class="tb-row"><span>Head office</span><b>Lusaka, Zambia</b></div>
+      <div class="tb-row"><span>Status</span><b style="color:#7FBF8F;">Active</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="overview" id="overview">
+  <div class="wrap overview-grid">
+    <div class="reveal">
+      <div class="section-label">Company Overview</div>
+      <h2>One contractor, seven disciplines under one roof.</h2>
+      <p>Lubs Mutondo Limited is a duly registered private company, limited by shares in accordance with the laws of Zambia, with its offices in Lusaka. The company has established itself as a contractor and supplier of high quality, reputable brands of automotive equipment, accessories and reagents, and other general goods and services in the country.</p>
+      <p>Since incorporation, we've supplied goods and services spanning events management, construction services &amp; materials, office equipment, equipment installation among several others — built around a core specialty in electronic security: the supply, installation and maintenance of CCTV, intruder alarms, electric fencing, access control, biometric scanners, intercoms, gate automation and vehicle tracking.</p>
+    </div>
+    <div class="reg-card reveal">
+      <div class="tb-head">Get In Touch</div>
+      <div class="tb-row"><span>Phone</span><b>097 4833549</b></div>
+      <div class="tb-row"><span>Phone</span><b>0978 006151</b></div>
+      <div class="tb-row"><span>Email</span><b>rodneymutondo@gmail.com</b></div>
+      <div class="tb-row"><span>Location</span><b>Emmasdale, Lusaka</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="services-head reveal">
+      <div class="section-label">Capability Index</div>
+      <h2>Everything we supply and install</h2>
+      <p>Seven service lines, one point of contact — request a quote for any of the below and we'll put together a full breakdown.</p>
+    </div>
+
+    <div class="service-grid reveal">
+
+      <div class="card">
+        <span class="card-fig">FIG. 01</span>
+        <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 10 L12 4 L20 10 V19 A1 1 0 0 1 19 20 H5 A1 1 0 0 1 4 19 Z"/><circle cx="12" cy="13" r="2.6"/></svg></div>
+        <h3>Electronic Security Systems</h3>
+        <ul>
+          <li>CCTV surveillance</li>
+          <li>Intruder alarm systems</li>
+          <li>Electric fencing</li>
+          <li>Access control &amp; biometrics</li>
+          <li>Intercom &amp; gate motor automation</li>
+          <li>Vehicle tracking &amp; fire alarms</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="card-fig">FIG. 02</span>
+        <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 21 L21 21 M6 21 V11 L12 6 L18 11 V21 M9 21 V15 H15 V21"/></svg></div>
+        <h3>Construction &amp; Civil Works</h3>
+        <ul>
+          <li>Construction services &amp; materials</li>
+          <li>Site labour &amp; skilled trades</li>
+          <li>Civil engineering contracting</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="card-fig">FIG. 03</span>
+        <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 17 H14 V8 H9 L6 12 H3 Z M14 17 V11 H18 L21 14 V17 Z"/><circle cx="7.5" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg></div>
+        <h3>Vehicle &amp; Plant Hire</h3>
+        <ul>
+          <li>Tipper truck hire — long-term, short-term &amp; daily</li>
+          <li>Automotive equipment supply</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="card-fig">FIG. 04</span>
+        <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 20 V9 H20 V20 M4 20 H20 M8 20 V14 H14 V20 M4 9 L12 4 L20 9"/></svg></div>
+        <h3>Facilities &amp; Office Supply</h3>
+        <ul>
+          <li>Office furniture &amp; equipment</li>
+          <li>Office equipment repair &amp; maintenance</li>
+          <li>Protective wear</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="card-fig">FIG. 05</span>
+        <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M6 4 H18 V9 H6 Z M8 9 V13 M16 9 V13 M6 13 H18 V20 H6 Z"/></svg></div>
+        <h3>Air Conditioning, Electrical &amp; Hardware</h3>
+        <ul>
+          <li>AC fitting &amp; maintenance</li>
+          <li>Electrical supplies</li>
+          <li>PVC pipes &amp; fittings</li>
+          <li>General hardware</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="card-fig">FIG. 06</span>
+        <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M6 21 L9 9 H15 L18 21 M9 9 L8 3 H16 L15 9 M4 21 H20"/></svg></div>
+        <h3>Cleaning &amp; Facility Services</h3>
+        <ul>
+          <li>Commercial cleaning teams</li>
+          <li>Cleaning equipment supply</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="card-fig">FIG. 07</span>
+        <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 4 H20 V16 H13 L9 20 V16 H4 Z"/><path d="M8 9 H16 M8 12 H13"/></svg></div>
+        <h3>Events &amp; General Supply</h3>
+        <ul>
+          <li>Events management</li>
+          <li>Reagents &amp; chemical supply</li>
+          <li>General goods &amp; services</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="work" id="work">
+  <div class="wrap">
+    <div class="work-head reveal">
+      <div class="section-label">Fig. 08 — Completed Work</div>
+      <h2>A look at installations &amp; projects</h2>
+      <p>A selection of jobs we've delivered — security installations, construction and site work. Get in touch for references or to discuss a similar project.</p>
+    </div>
+
+    <!--
+      HOW TO ADD MORE PHOTOS:
+      1. Drop the photo file into the "images" folder next to this index.html file.
+      2. Copy one ".work-item" block below, and edit:
+           - src="images/your-file-name.jpg"  (must start with "images/")
+           - alt="a short plain description of the photo"
+           - the FIG label (just a running number, purely cosmetic)
+           - the bold project title and the location/date line
+      3. Add or remove blocks freely — the grid reflows to fit however many you have.
+    -->
+    <div class="work-grid reveal">
+
+      <div class="work-item">
+        <img src="images/sec cam after.jpg" alt="CCTV camera installation on a residential perimeter wall" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.1</span>
+          <strong>CCTV &amp; Perimeter Security</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/pvc pipe work.jpg" alt="PVC pipe works" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.1</span>
+          <strong>Water Works</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/intrusion panel.jpg" alt="IDS security panel" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.1</span>
+          <strong>Perimeter Security</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/motion sensor.jpg" alt="IDS security motion sensor" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.1</span>
+          <strong>Perimeter Security</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/sec cam feed.jpg" alt="CCTV camera feed" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.1</span>
+          <strong>CCTV &amp; Perimeter Security</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/biometric.jpg" alt="IDS security biometric panel" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.1</span>
+          <strong>Perimeter Security</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/borehole.jpg" alt="Borehole installation" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.1</span>
+          <strong>Water works</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/water tank install.jpg" alt="Water tank installation" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.1</span>
+          <strong>Water works</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/elec fence install.jpg" alt="Electric fence installation along a boundary wall" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.2</span>
+          <strong>Electric Fencing Installation</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/elec fence after.jpg" alt="Completed electric fence installation along a boundary wall" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.3</span>
+          <strong>Electric Fencing Installation Result</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/car tracker install.jpg" alt="GPS car tracker installation" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.4</span>
+          <strong>GPS Tracker Installation</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <img src="images/gps after.jpg" alt="Completed GPS car tracker installation" loading="lazy">
+        <div class="work-caption">
+          <span class="fig">Fig. 08.5</span>
+          <strong>GPS Tracker Installation Result</strong>
+          <span class="loc">Lusaka · 2025</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <div class="section-label" style="color:var(--rust-2);">Contact</div>
+      <h2>Tell us what you need supplied, installed or hired.</h2>
+      <p class="lead">Reach out with your site details and requirements — we'll come back to you with a full quotation.</p>
+      <div class="contact-list">
+        <div><span class="mono">Phone</span> 097 4833549 &nbsp;/&nbsp; 0978 006151</div>
+        <div><span class="mono">Email</span> rodneymutondo@gmail.com</div>
+        <div><span class="mono">Address</span> Emmasdale, Lusaka, Zambia</div>
+      </div>
+    </div>
+
+    <div class="cta-panel reveal">
+      <div class="tb-head">Request a Quote</div>
+      <p>Pick your products and services from our catalogue and we'll email you a formal quotation or invoice — no back-and-forth needed.</p>
+      <a href="catalogue.html" class="btn btn-primary">Browse the catalogue</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© <span id="year"></span> LUBS MUTONDO LIMITED</span>
+    <span>REG. 20 FEB 2024 · LUSAKA, ZAMBIA</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const toggle = document.querySelector('.menu-toggle');
+  const links = document.querySelector('.navlinks');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const open = links.style.display === 'flex';
+      links.style.display = open ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '64px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'rgba(22,35,46,0.98)';
+      links.style.padding = '20px 32px';
+      links.style.gap = '18px';
+    });
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
