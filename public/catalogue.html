@@ -8,126 +8,462 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#16232E; --ink-2:#1F2F3D; --rust:#B24B32; --rust-2:#D66748;
-    --steel:#3D6E8C; --grey:#5B6B77; --line:#2C3E4D;
-    --paper:#FFFFFF; --paper-2:#F2F4F1; --border:#D8DCD3;
+    --ink:#0d151d;
+    --ink-2:#16222f;
+    --rust:#c2410c;
+    --rust-2:#ea580c;
+    --steel:#475569;
+    --grey:#64748b;
+    --line:#1e293b;
+    --paper:#ffffff;
+    --paper-2:#f8fafc;
+    --border:#e2e8f0;
+    --accent-glow:rgba(234,88,12,0.12);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper-2);line-height:1.55;-webkit-font-smoothing:antialiased;}
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.1;letter-spacing:-0.01em;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--paper-2);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    letter-spacing:-0.01em;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk',sans-serif;
+    line-height:1.15;
+    letter-spacing:-0.02em;
+    font-weight:700;
+  }
   .mono{font-family:'IBM Plex Mono',monospace;}
   a{color:inherit;text-decoration:none;}
   .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
   @media(max-width:640px){.wrap{padding:0 20px;}}
-  a:focus-visible, button:focus-visible, input:focus-visible{outline:2px solid var(--rust);outline-offset:2px;}
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--rust-2);
+    outline-offset:2px;
+  }
 
-  header{background:var(--ink);border-bottom:1px solid var(--line);}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;color:#fff;}
-  .brand{display:flex;align-items:center;gap:12px;}
-  .brand-mark{width:36px;height:36px;border:1.5px solid var(--rust);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--rust);flex-shrink:0;}
-  .brand-text{display:flex;flex-direction:column;line-height:1.15;}
-  .brand-text strong{font-family:'Space Grotesk',sans-serif;font-size:15px;letter-spacing:0.02em;}
-  .brand-text span{font-size:10.5px;color:#9FB0BC;font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em;text-transform:uppercase;}
-  .navlinks{display:flex;gap:34px;font-size:14px;color:#C7D2D9;}
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(13,21,29,0.95);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+    transition:all 0.3s ease;
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 32px;color:#fff;
+  }
+  .brand{display:flex;align-items:center;gap:14px;cursor:pointer;}
+  .brand-mark{
+    width:40px;height:40px;border:2px solid var(--rust-2);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;
+    color:#fff;background:var(--rust);
+    border-radius:4px;
+    box-shadow:0 0 15px var(--accent-glow);
+    transition:all 0.3s ease;
+  }
+  .brand:hover .brand-mark{
+    background:var(--rust-2);
+    transform:rotate(3deg) scale(1.05);
+  }
+  .brand-text{display:flex;flex-direction:column;line-height:1.2;}
+  .brand-text strong{font-family:'Space Grotesk',sans-serif;font-size:16px;letter-spacing:0.03em;font-weight:700;color:#fff;}
+  .brand-text span{font-size:10px;color:#94a3b8;font-family:'IBM Plex Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;margin-top:1px;}
+  
+  .navlinks{display:flex;gap:36px;font-size:14px;font-weight:500;color:#94a3b8;}
+  .navlinks a{transition:all 0.2s ease;position:relative;padding:6px 0;}
   .navlinks a:hover{color:#fff;}
   .navlinks a.active{color:var(--rust-2);}
-  @media(max-width:760px){.navlinks{display:none;}}
+  .navlinks a::after{
+    content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;
+    background:var(--rust-2);transition:width 0.25s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .menu-toggle{
+    display:none;background:none;border:1px solid var(--line);color:#fff;padding:8px 12px;font-size:18px;
+    cursor:pointer;border-radius:4px;transition:all 0.2s ease;
+  }
+  .menu-toggle:hover{background:rgba(255,255,255,0.05);border-color:#475569;}
+  
+  @media(max-width:760px){
+    .navlinks{display:none;}
+    .menu-toggle{display:block;}
+  }
 
-  .pagehead{padding:56px 0 40px;background:var(--ink);color:#fff;border-bottom:1px solid var(--line);}
-  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--rust-2);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--rust-2);}
-  .pagehead h1{font-size:clamp(26px,3.6vw,38px);max-width:640px;}
-  .pagehead p{color:#B9C4CC;margin-top:14px;max-width:560px;font-size:15px;}
+  /* ---------- page head ---------- */
+  .pagehead{
+    position:relative;
+    padding:64px 0;
+    background:var(--ink);
+    color:#fff;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;
+    color:var(--rust-2);text-transform:uppercase;margin-bottom:16px;
+    display:flex;align-items:center;gap:12px;
+    font-weight:600;
+  }
+  .eyebrow::before{content:"";width:26px;height:1.5px;background:var(--rust-2);}
+  .pagehead h1{font-size:clamp(30px,4vw,42px);font-weight:700;max-width:640px;line-height:1.15;}
+  .pagehead p{color:#94a3b8;margin-top:16px;max-width:600px;font-size:16px;line-height:1.65;}
 
-  .layout{padding:48px 0 100px;display:grid;grid-template-columns:1.5fr 1fr;gap:36px;align-items:start;}
-  @media(max-width:900px){.layout{grid-template-columns:1fr;}}
+  /* ---------- layout ---------- */
+  .layout{padding:48px 0 100px;display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:start;}
+  @media(max-width:900px){.layout{grid-template-columns:1fr;gap:32px;}}
 
   /* ---------- product list ---------- */
-  .panel{background:var(--paper);border:1px solid var(--border);}
-  .panel-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
-  .panel-head h2{font-size:15px;}
-  .panel-head .count{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--steel);}
+  .panel{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 4px 20px rgba(0,0,0,0.02);
+  }
+  .panel-head{
+    padding:20px 24px;
+    border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;
+    background:#fff;
+  }
+  .panel-head h2{font-size:17px;font-weight:700;color:var(--ink);}
+  .panel-head .count{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--rust);font-weight:600;}
 
-  .sublist-head{padding:11px 20px;background:var(--paper-2);border-bottom:1px solid var(--border);border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);display:flex;justify-content:space-between;}
+  .sublist-head{
+    padding:14px 24px;
+    background:var(--paper-2);
+    border-bottom:1px solid var(--border);
+    border-top:1px solid var(--border);
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--steel);
+    display:flex;justify-content:space-between;
+    font-weight:600;
+  }
   #product-list > .sublist-head:first-child{border-top:none;}
 
-  .product-row{display:grid;grid-template-columns:88px 1fr auto auto;gap:16px;align-items:center;padding:18px 20px;border-bottom:1px solid var(--border);}
+  .product-row{
+    display:grid;grid-template-columns:130px 1fr auto auto;gap:24px;align-items:center;
+    padding:20px 24px;border-bottom:1px solid var(--border);
+    transition:background 0.2s ease;
+  }
+  .product-row:hover{background:var(--paper-2);}
   .product-row:last-child{border-bottom:none;}
-  .product-price.tbc{color:var(--grey);font-style:italic;font-size:12.5px;}
+  .product-price.tbc{color:var(--grey);font-style:italic;font-size:13px;}
   .product-thumb{
-    width:88px;height:88px;background:var(--paper-2);border:1px solid var(--border);
+    width:130px;height:130px;background:var(--paper-2);border:1px solid var(--border);
     overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    border-radius:6px;
+    transition: all 0.2s ease;
   }
-  .product-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .product-thumb:not(.empty){
+    cursor:zoom-in;
+  }
+  .product-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s ease;}
+  .product-row:hover .product-thumb img{transform:scale(1.05);}
   .product-thumb.empty::after{
-    content:"—";font-family:'IBM Plex Mono',monospace;color:var(--border);font-size:16px;
+    content:"—";font-family:'IBM Plex Mono',monospace;color:var(--grey);font-size:16px;
   }
-  .product-name{font-weight:600;font-size:14.5px;}
-  .product-unit{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--grey);margin-top:3px;text-transform:uppercase;letter-spacing:.03em;}
-  .product-price{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ink);white-space:nowrap;text-align:right;min-width:90px;}
-  .qty-stepper{display:flex;align-items:center;border:1px solid var(--border);}
-  .qty-stepper button{width:30px;height:30px;background:var(--paper-2);border:none;font-size:15px;cursor:pointer;color:var(--ink);}
-  .qty-stepper button:hover{background:var(--border);}
-  .qty-stepper input{width:42px;height:30px;border:none;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:13px;-moz-appearance:textfield;}
+  .product-name{font-weight:700;font-size:15px;color:var(--ink);margin-bottom:4px;}
+  .product-unit{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;}
+  .product-price{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ink);font-weight:500;white-space:nowrap;text-align:right;min-width:100px;}
+  
+  .qty-stepper{
+    display:flex;align-items:center;border:1px solid var(--border);
+    border-radius:6px;overflow:hidden;background:var(--paper-2);
+  }
+  .qty-stepper button{
+    width:32px;height:32px;background:var(--paper-2);border:none;
+    font-size:16px;cursor:pointer;color:var(--ink);font-weight:600;
+    transition:all 0.15s ease;
+  }
+
+  @media(max-width:640px){
+    .product-row{
+      grid-template-columns: 110px 1fr;
+      grid-template-areas: 
+        "thumb info"
+        "thumb price"
+        "stepper stepper";
+      gap: 12px;
+      padding: 16px;
+    }
+    .product-thumb {
+      grid-area: thumb;
+      width: 110px !important;
+      height: 110px !important;
+    }
+    .product-info {
+      grid-area: info;
+      align-self: center;
+    }
+    .product-price {
+      grid-area: price;
+      text-align: left;
+      min-width: 0;
+      align-self: center;
+    }
+    .qty-stepper {
+      grid-area: stepper;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .qty-stepper button {
+      flex: 1;
+      height: 38px;
+    }
+    .qty-stepper input {
+      flex: 2;
+      height: 38px;
+    }
+  }
+
+  /* ---------- lightbox modal ---------- */
+  .lightbox-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background: rgba(13, 21, 29, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .lightbox-modal.active {
+    display: flex;
+    opacity: 1;
+  }
+  .lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .lightbox-image {
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .lightbox-modal.active .lightbox-image {
+    transform: scale(1);
+  }
+  .lightbox-caption {
+    color: #fff;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .lightbox-caption strong {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 6px;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .lightbox-caption span {
+    font-size: 14px;
+    color: #94a3b8;
+    font-family: 'Inter', sans-serif;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 1010;
+  }
+  .lightbox-close:hover {
+    background: var(--rust);
+    border-color: var(--rust-2);
+    transform: scale(1.05);
+  }
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 1010;
+    user-select: none;
+  }
+  .lightbox-nav:hover {
+    background: var(--rust);
+    border-color: var(--rust-2);
+    transform: translateY(-50%) scale(1.05);
+  }
+  .lightbox-nav.prev {
+    left: 24px;
+  }
+  .lightbox-nav.next {
+    right: 24px;
+  }
+  @media (max-width: 768px) {
+    .lightbox-nav {
+      width: 44px;
+      height: 44px;
+      font-size: 20px;
+    }
+    .lightbox-nav.prev {
+      left: 12px;
+    }
+    .lightbox-nav.next {
+      right: 12px;
+    }
+    .lightbox-close {
+      top: 16px;
+      right: 16px;
+      width: 44px;
+      height: 44px;
+      font-size: 20px;
+    }
+  }
+  .qty-stepper button:hover{background:var(--border);color:var(--rust-2);}
+  .qty-stepper input{
+    width:44px;height:32px;border:none;text-align:center;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);
+    background:#fff;border-left:1px solid var(--border);border-right:1px solid var(--border);
+    -moz-appearance:textfield;
+  }
   .qty-stepper input::-webkit-outer-spin-button,.qty-stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
 
-  .empty-state{padding:40px 20px;text-align:center;color:var(--grey);font-size:14px;}
+  .empty-state{padding:48px 24px;text-align:center;color:var(--grey);font-size:15px;}
 
   /* ---------- cart / form panel ---------- */
-  .cart{position:sticky;top:20px;}
+  .cart{position:sticky;top:90px;z-index:10;}
   .cart .panel-head{background:var(--ink);color:#fff;border-color:var(--line);}
-  .cart .panel-head .count{color:var(--rust-2);}
-  .cart-items{padding:6px 20px;}
-  .cart-item{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-bottom:1px solid var(--border);color:var(--grey);}
+  .cart .panel-head h2{color:#fff;}
+  .cart .panel-head .count{color:var(--rust-2);font-weight:600;}
+  .cart-items{padding:10px 24px;}
+  .cart-item{
+    display:flex;justify-content:space-between;align-items:center;font-size:13.5px;
+    padding:12px 0;border-bottom:1px solid var(--border);color:var(--grey);
+  }
   .cart-item:last-child{border-bottom:none;}
-  .cart-item b{color:var(--ink);font-weight:500;}
-  .cart-empty{padding:24px 20px;color:var(--grey);font-size:13.5px;}
-  .cart-total{display:flex;justify-content:space-between;padding:16px 20px;border-top:1.5px solid var(--ink);font-weight:600;font-size:15px;}
+  .cart-item b{color:var(--ink);font-weight:600;font-family:'IBM Plex Mono',monospace;}
+  .cart-empty{padding:32px 24px;color:var(--grey);font-size:14px;text-align:center;line-height:1.6;}
+  .cart-total{
+    display:flex;justify-content:space-between;padding:20px 24px;
+    border-top:1.5px solid var(--ink);font-weight:700;font-size:16px;
+    background:var(--paper-2);
+  }
   .cart-total .mono{color:var(--rust);font-family:'IBM Plex Mono',monospace;}
 
-  .form-section{padding:20px;border-top:1px solid var(--border);}
-  .type-toggle{display:flex;border:1px solid var(--border);margin-bottom:18px;}
-  .type-toggle button{flex:1;padding:11px;background:var(--paper);border:none;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--grey);cursor:pointer;transition:.15s;}
+  .form-section{padding:24px;border-top:1px solid var(--border);background:#fff;}
+  .type-toggle{display:flex;border:1px solid var(--border);margin-bottom:20px;border-radius:6px;overflow:hidden;}
+  .type-toggle button{
+    flex:1;padding:12px;background:var(--paper);border:none;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--grey);cursor:pointer;transition:all 0.2s ease;
+    font-weight:600;
+  }
   .type-toggle button.active{background:var(--ink);color:#fff;}
   .type-toggle button:first-child{border-right:1px solid var(--border);}
 
-  .field{margin-bottom:14px;}
-  .field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);margin-bottom:6px;}
-  .field input, .field textarea{width:100%;padding:11px 12px;border:1px solid var(--border);font-family:'Inter',sans-serif;font-size:14px;background:var(--paper);color:var(--ink);}
-  .field textarea{resize:vertical;min-height:70px;}
-  .field input:focus, .field textarea:focus{border-color:var(--steel);}
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--steel);
+    margin-bottom:8px;font-weight:600;
+  }
+  .field input, .field textarea{
+    width:100%;padding:12px 14px;border:1px solid var(--border);
+    font-family:'Inter',sans-serif;font-size:14px;background:var(--paper);
+    color:var(--ink);border-radius:6px;transition:all 0.2s ease;
+  }
+  .field textarea{resize:vertical;min-height:80px;line-height:1.5;}
+  .field input:focus, .field textarea:focus{
+    border-color:var(--rust-2);
+    background:#fff;
+    box-shadow:0 0 0 3px rgba(234,88,12,0.1);
+  }
 
   /* honeypot - invisible to humans, present for bots */
   .hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
 
-  .submit-btn{width:100%;padding:14px;background:var(--rust);color:#fff;border:none;font-size:14.5px;font-weight:500;cursor:pointer;transition:background .15s;margin-top:6px;}
-  .submit-btn:hover:not(:disabled){background:var(--rust-2);}
-  .submit-btn:disabled{background:#B9A99E;cursor:not-allowed;}
+  .submit-btn{
+    width:100%;padding:15px;background:var(--rust);color:#fff;
+    border:none;font-size:14px;font-weight:600;cursor:pointer;
+    transition:all 0.25s cubic-bezier(0.4,0,0.2,1);margin-top:8px;
+    border-radius:6px;font-family:'IBM Plex Mono',monospace;
+    text-transform:uppercase;letter-spacing:0.04em;
+    box-shadow:0 4px 12px rgba(194,65,12,0.15);
+  }
+  .submit-btn:hover:not(:disabled){
+    background:var(--rust-2);
+    transform:translateY(-1px);
+    box-shadow:0 6px 16px rgba(234,88,12,0.3);
+  }
+  .submit-btn:disabled{
+    background:#cbd5e1;color:#94a3b8;cursor:not-allowed;
+    box-shadow:none;
+  }
 
-  .status-msg{margin-top:14px;padding:12px 14px;font-size:13.5px;border:1px solid transparent;}
-  .status-msg.success{background:#EAF4EC;border-color:#B7DABF;color:#2E7D32;}
-  .status-msg.error{background:#FBEAE6;border-color:#EBC3B7;color:#B24B32;}
+  .status-msg{margin-top:16px;padding:14px 16px;font-size:14px;border-radius:6px;border:1px solid transparent;line-height:1.5;}
+  .status-msg.success{background:#f0fdf4;border-color:#bbf7d0;color:#166534;}
+  .status-msg.error{background:#fef2f2;border-color:#fecaca;color:#991b1b;}
 
-  footer{padding:26px 0;background:var(--ink);border-top:1px solid var(--line);color:#7E8F9A;font-size:12.5px;font-family:'IBM Plex Mono',monospace;}
-  .footer-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  footer{
+    padding:32px 0;background:var(--ink);border-top:1px solid var(--line);
+    color:#475569;font-size:12px;font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.02em;
+  }
+  .footer-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;}
 </style>
 </head>
 <body>
 
 <header>
   <nav class="nav wrap" style="padding-left:0;padding-right:0;">
-    <div class="brand">
+    <a href="index.html" class="brand">
       <div class="brand-mark">LM</div>
       <div class="brand-text">
         <strong>LUBS MUTONDO LTD</strong>
         <span>Security · Construction · Supply</span>
       </div>
-    </div>
+    </a>
     <div class="navlinks">
       <a href="index.html">Home</a>
       <a href="catalogue.html" class="active">Catalogue</a>
       <a href="index.html#contact">Contact</a>
     </div>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
   </nav>
 </header>
 
@@ -195,6 +531,20 @@
   </div>
 </div>
 
+<!-- Lightbox Modal -->
+<div class="lightbox-modal" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">×</button>
+  <button class="lightbox-nav prev" id="lightbox-prev" aria-label="Previous image">‹</button>
+  <button class="lightbox-nav next" id="lightbox-next" aria-label="Next image">›</button>
+  <div class="lightbox-content">
+    <img src="" alt="" class="lightbox-image" id="lightbox-img">
+    <div class="lightbox-caption" id="lightbox-caption">
+      <strong id="lightbox-title"></strong>
+      <span id="lightbox-desc"></span>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap footer-row">
     <span>© <span id="year"></span> LUBS MUTONDO LIMITED</span>
@@ -228,12 +578,12 @@
   function productRowHtml(p) {
     const priced = p.unitPrice !== null && p.unitPrice !== undefined;
     const thumb = p.image
-      ? `<div class="product-thumb"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>`
+      ? `<div class="product-thumb" data-id="${p.id}"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>`
       : `<div class="product-thumb empty"></div>`;
     return `
       <div class="product-row">
         ${thumb}
-        <div>
+        <div class="product-info">
           <div class="product-name">${p.name}</div>
           <div class="product-unit">${p.unit || ""}</div>
         </div>
@@ -394,6 +744,111 @@
       submitBtn.disabled = false;
       renderCart();
     }
+  });
+
+  const toggle = document.querySelector('.menu-toggle');
+  const links = document.querySelector('.navlinks');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const open = links.style.display === 'flex';
+      links.style.display = open ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '64px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'rgba(13,21,29,0.98)';
+      links.style.padding = '20px 32px';
+      links.style.gap = '18px';
+    });
+  }
+
+  // Lightbox Implementation
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxDesc = document.getElementById('lightbox-desc');
+  const lightboxClose = document.getElementById('lightbox-close');
+  const lightboxPrev = document.getElementById('lightbox-prev');
+  const lightboxNext = document.getElementById('lightbox-next');
+
+  let imageProducts = [];
+  let currentImageProductIndex = 0;
+
+  function openLightboxForProduct(p) {
+    imageProducts = products.filter(pr => pr.image);
+    currentImageProductIndex = imageProducts.findIndex(pr => pr.id === p.id);
+    if (currentImageProductIndex === -1) return;
+
+    updateLightboxContent();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+  }
+
+  function updateLightboxContent() {
+    const p = imageProducts[currentImageProductIndex];
+    lightboxImg.src = p.image;
+    lightboxImg.alt = p.name;
+    lightboxTitle.textContent = p.name;
+    
+    const priced = p.unitPrice !== null && p.unitPrice !== undefined;
+    const priceText = priced ? formatPrice(p.unitPrice) : "Quote on request";
+    lightboxDesc.textContent = `${p.unit || ""} · ${priceText}`;
+  }
+
+  function showNextProduct() {
+    if (!imageProducts.length) return;
+    currentImageProductIndex = (currentImageProductIndex + 1) % imageProducts.length;
+    updateLightboxContent();
+  }
+
+  function showPrevProduct() {
+    if (!imageProducts.length) return;
+    currentImageProductIndex = (currentImageProductIndex - 1 + imageProducts.length) % imageProducts.length;
+    updateLightboxContent();
+  }
+
+  productList.addEventListener('click', (e) => {
+    const thumb = e.target.closest('.product-thumb:not(.empty)');
+    if (!thumb) return;
+    
+    const productId = thumb.dataset.id;
+    const p = products.find(pr => pr.id === productId);
+    if (!p) return;
+
+    openLightboxForProduct(p);
+  });
+
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+
+  lightboxNext.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showNextProduct();
+  });
+
+  lightboxPrev.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showPrevProduct();
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    if (e.key === 'ArrowRight') showNextProduct();
+    if (e.key === 'ArrowLeft') showPrevProduct();
   });
 
   loadCatalogue();
